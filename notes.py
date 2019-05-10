@@ -51,7 +51,7 @@ class Note(_BaseInt):
         super(Note, self).__init__(value % len(self.NOTES))
 
     def __str__(self):
-        return self.NOTES[int(self)].replace('b', '\u266d')
+        return self.NOTES[int(self)]
 
     def __repr__(self):
         return str(self)
@@ -251,13 +251,13 @@ def iter_scales(start=A, mode=None):
             yield Scale(note, mode)
 
 
-def scales_with(*notes, perfect=True):
+def scales_with(*notes, perfect=True, mode=None):
     def _sort_key(pair):
         common, scale = pair
         return (len(common), str(scale))
 
     notes = set(notes)
-    scales = list(iter_scales())
+    scales = list(iter_scales(mode=mode))
     commons = [[note for note in scale.notes if note in notes]
                for scale in scales]
     if perfect:
